@@ -9,11 +9,7 @@ class Square extends Component {
 	}
 	render() {
 		return (
-			<button
-				disabled={this.props.disabled}
-				className="square"
-				onClick={this.props.onClick}
-			>
+			<button className="square" onClick={this.props.onClick}>
 				{this.props.value}
 			</button>
 		);

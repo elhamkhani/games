@@ -11,26 +11,22 @@ class Board extends Component {
 		};
 	}
 	getWinner(squares) {
-		console.log(squares);
 		const winningCombo = [
-			[1, [2, 3], [4, 7], [5, 9]],
-			[2, [5, 8]],
-			[3, [6, 9], [5, 7]],
-			[4, [5, 6]],
-			[7, [8, 9]]
+			[0, [1, 2], [3, 6], [4, 8]],
+			[1, [4, 7]],
+			[2, [5, 8], [4, 6]],
+			[3, [4, 5]],
+			[6, [7, 8]]
 		];
 		for (let i = 0; i < winningCombo.length; i++) {
-			let value = squares[winningCombo[i][0] - 1];
-			if (value !== null) {
-				for (let j = 1; j < winningCombo[i].length; j++) {
-					if (
-						value === squares[winningCombo[i][j][0] - 1] &&
-						value === squares[winningCombo[i][j][1] - 1]
-					) {
-						this.setState({
-							winner: value
-						});
-					}
+			let value = squares[winningCombo[i][0]];
+			if (value === null) continue;
+			for (let j = 1; j < winningCombo[i].length; j++) {
+				if (
+					value === squares[winningCombo[i][j][0]] &&
+					value === squares[winningCombo[i][j][1]]
+				) {
+					return value;
 				}
 			}
 		}
@@ -45,17 +41,18 @@ class Board extends Component {
 
 	handleClick(i) {
 		const squares = this.state.squares.slice();
+		if (this.getWinner(squares) || squares[i]) {
+			return;
+		}
 		squares[i] = this.state.xIsNext ? 'X' : 'O';
 		this.setState({
 			squares: squares,
 			xIsNext: !this.state.xIsNext
 		});
-		this.getWinner(squares);
 	}
 	renderSquare(i) {
 		return (
 			<Square
-				disabled={this.state.squares[i] != null || this.state.winner != null}
 				value={this.state.squares[i]}
 				onClick={() => {
 					this.handleClick(i);
@@ -64,15 +61,15 @@ class Board extends Component {
 		);
 	}
 	render() {
-		const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-		const winnerStatus = !!!this.state.winner
-			? ''
-			: this.state.winner + ' won!';
+		const winner = this.getWinner(this.state.squares);
+		const status = winner
+			? winner + ' won!'
+			: 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 		return (
 			<div>
 				<div>
 					<div className="status">{status}</div>
-					<div>{winnerStatus}</div>
+
 					<div className="board-row">
 						{this.renderSquare(0)}
 						{this.renderSquare(1)}
