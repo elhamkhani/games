@@ -4,17 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Menu from './Menu';
 import TicTacToe from './TicTacToe/TicTacToe';
-import Navigation from './Navigation';
+import MemoryGame from './MemoryGame/MemoryGame';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<Navigation></Navigation>
+			<Menu />
 			<Routes>
 				<Route path="/" element={<App />}></Route>
 				<Route path="TicTacToe" element={<TicTacToe />}></Route>
+				<Route path="MemoryGame" element={<MemoryGame />}></Route>
 			</Routes>
 		</BrowserRouter>
 	</React.StrictMode>

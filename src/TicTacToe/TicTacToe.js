@@ -5,8 +5,7 @@ import './TicTacToe.css';
 class TicTacToe extends Component {
 	render() {
 		return (
-			<div>
-				TicTacToe
+			<div className="game">
 				<Board></Board>
 			</div>
 		);
